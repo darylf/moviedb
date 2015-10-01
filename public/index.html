@@ -1,0 +1,46 @@
+<!doctype html>
+<html data-ng-app="movieapp">
+  <head>
+    <title>Movie List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+  </head>
+
+  <body>
+    <div class="container" ng-controller="MovieCtrl">
+      <h1>Movie List</h1>
+
+       <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Year Released</th>
+            <th>Director</th>
+            <th>Genre</th>
+            <th>&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="movie in movies">
+            <td>{{movie.title}}</td>
+            <td>{{movie.releaseYear}}</td>
+            <td>{{movie.director}}</td>
+            <td>{{movie.genre}}</td>
+            <td><button class="btn btn-danger" data-ng-click="remove(movie._id)">-</button></td>
+          </tr>
+          <tr>
+            <td><input ng-model="movie.title"></td>
+            <td><input ng-model="movie.releaseYear"></td>
+            <td><input ng-model="movie.director"></td>
+            <td><input ng-model="movie.genre"></td>
+            <td><button class="btn btn-info" data-ng-click="addMovie()">+</button></td>
+          </tr>
+        </tbody>
+      </table>
+ 
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>
+    <script src="./app/main.js"></script>
+  </body>
+</html>
