@@ -1,6 +1,39 @@
-var myApp = angular.module('movieapp',[]);
+var movieApp = angular.module('movieapp',[]);
 
-myApp.controller('MovieCtrl',['$scope','$http',function($scope, $http) {
+movieApp.controller('MoviesController',['$scope','$http',function($scope, $http) {
+
+  $scope.saveMovie = function() {
+    var id=$scope.movie._id
+    if(!id) {
+      this.addMovie();
+    } else {
+      this.updateMovie();
+    }
+  }
+
+  $scope.addMovie = function() {
+    $http.post('/api/movies', $scope.movie).success(function(res) {
+      refresh();
+    });
+  };
+
+  $scope.deleteMovie = function(id) {
+    $http.delete('/api/movies/'+id).success(function(res) {
+      refresh();
+    });
+  };
+
+  $scope.editMovie = function(id) {
+    $http.get('/api/movies/'+id).success(function(res) {
+      $scope.movie = res;
+    });
+  };
+
+  $scope.updateMovie = function() {
+    $http.put('/api/movies/'+$scope.movie._id, $scope.movie).success(function(res) {
+      refresh();
+    });
+  };
 
   var refresh = function() {
     $http.get('/api/movies').success(function(data) {
@@ -11,28 +44,4 @@ myApp.controller('MovieCtrl',['$scope','$http',function($scope, $http) {
 
   refresh();
 
-  $scope.addMovie = function() {
-    $http.post('/api/movies', $scope.movie).success(function(res) {
-      console.log(res);
-      refresh();
-    });
-  };
-
-  $scope.remove = function(id) {
-    $http.delete('/api/movies/'+id).success(function(res) {
-      refresh();
-    });
-  };
-
-  $scope.edit = function(id) {
-    $http.get('/api/movies/'+id).success(function(res) {
-      $scope.movie = res;
-    });
-  };
-
-  $scope.update = function() {
-    $http.put('/api/movies/'+$scope.movie.id, $scope.movie).success(function(res) {
-      refresh();
-    });
-  };
 }]);
